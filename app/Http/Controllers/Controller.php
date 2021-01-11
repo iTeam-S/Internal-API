@@ -19,17 +19,13 @@ class Controller extends BaseController
     public function list_mission_back(){
         $mission_back = DB::table('mission_equipe')->where('id_equipe', '3')->get();
         echo json_encode($mission_back);
-        $mission_front = DB::table('mission_equipe')->where('id_equipe', '1')->get();
-        echo json_encode($mission_back);
-        $mission_exploit = DB::table('mission_equipe')->where('id_equipe', '2')->get();
-        echo json_encode($mission_back);
-        $mission_admin = DB::table('mission_equipe')->where('id_equipe', '4')->get();
-        echo json_encode($mission_back);
     }
+    
     public function list_membre(){
         $membre = DB::select('SELECT nom, prenom, user_github, poste From membre');
         echo json_encode($membre);
     } 
+    
     public function insertion(){
         Post::create(request()->all());
         echo json_encode('create');
@@ -45,6 +41,7 @@ class Controller extends BaseController
             return $res;
 
     }
+    
     public function membre_qualité_exploitation($final=true){
         $membre_qualité_exploitation = DB::select('SELECT CONCAT(m.nom, " ", m.prenom) AS nom, user_github_pic, p.nom AS nom_poste FROM membre m JOIN fonction f ON m.id = f.id_membre JOIN poste p ON f.id_poste = p.id JOIN equipe e ON e.id = f.id_equipe WHERE e.id = 2');
         $mission_qualité_exploitation = DB::select("SELECT mission FROM mission_equipe JOIN equipe ON equipe.id = mission_equipe.id_equipe WHERE equipe.id = 1");
@@ -53,8 +50,8 @@ class Controller extends BaseController
             echo json_encode($res);
         else
             return $res;
-
     }
+    
     public function membre_back($final=true){
         $membre_back = DB::select('SELECT CONCAT(m.nom, " ", m.prenom) AS nom, user_github_pic, p.nom AS nom_poste FROM membre m JOIN fonction f ON m.id = f.id_membre JOIN poste p ON f.id_poste = p.id JOIN equipe e ON e.id = f.id_equipe WHERE e.id = 3');
         $mission_back = DB::select("SELECT mission FROM mission_equipe JOIN equipe ON equipe.id = mission_equipe.id_equipe WHERE equipe.id = 1");
@@ -65,6 +62,7 @@ class Controller extends BaseController
             return $res;
 
     }
+    
     public function membre_admin($final=true){
         $membre_admin = DB::select('SELECT CONCAT(m.nom, " ", m.prenom) AS nom, user_github_pic, p.nom AS nom_poste FROM membre m JOIN fonction f ON m.id = f.id_membre JOIN poste p ON f.id_poste = p.id JOIN equipe e ON e.id = f.id_equipe WHERE e.id = 4');
         $mission_admin = DB::select("SELECT mission FROM mission_equipe JOIN equipe ON equipe.id = mission_equipe.id_equipe WHERE equipe.id = 1");
@@ -76,7 +74,6 @@ class Controller extends BaseController
 
     }
    
-
     public function membres(){
         $ui_ux = $this->membre_UI_UX(false);
         $QE = $this->membre_qualité_exploitation(false);
