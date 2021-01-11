@@ -21,4 +21,12 @@ Route::get('/', function () {
 
 Route::get('/', 'Controller@accueil');
 
-Route::get('/mission_back', 'Controller@list_mission_back');
+Route::get('/UI_UX', 'Controller@membre_UI_UX');
+
+Route::get('/qe', 'Controller@membre_qualité_exploitation');
+
+Route::get('/back', 'Controller@membre_back');
+
+Route::get('/admin', 'Controller@membre_admin');
+
+Route::get('/membres', 'Controller@membres');
