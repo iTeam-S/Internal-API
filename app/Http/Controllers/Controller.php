@@ -12,8 +12,9 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     public function accueil(){
-        $members = DB::table('membre')->get();
-        echo json_encode($members);
+        // TSY AZO AMBANAKA ANY AMN INTERNET NY INFORMATION NY OLONA sensible ;) 
+        // $members = DB::table('membre')->get();
+        echo "Route Pour API iTeam-$";
     }
 
     public function list_mission_back(){
@@ -32,20 +33,19 @@ class Controller extends BaseController
     }
     
     public function membre_UI_UX($final=true){
-        $membre_UI_UX = DB::select('SELECT CONCAT(m.nom, " ", m.prenom) AS nom, user_github_pic, p.nom AS nom_poste FROM membre m JOIN fonction f ON m.id = f.id_membre JOIN poste p ON f.id_poste = p.id JOIN equipe e ON e.id = f.id_equipe WHERE e.id = 1');
-        $mission_UI_UX = DB::select("SELECT mission FROM mission_equipe JOIN equipe ON equipe.id = mission_equipe.id_equipe WHERE equipe.id = 1");
-        $res = array("1" => ["nom" => "Equipe UI & UX", "missions" => $mission_UI_UX, "membres" => $membre_UI_UX]);
+        $membre_UI_UX = DB::select('SELECT prenom_usuel, CONCAT(m.nom, " ", m.prenom) AS nom_complet, user_github_pic, p.nom AS nom_poste FROM membre m JOIN fonction f ON m.id = f.id_membre JOIN poste p ON f.id_poste = p.id JOIN equipe e ON e.id = f.id_equipe WHERE e.id = 1 AND m.id <> 1');
+        $mission_UI_UX = DB::select("SELECT GROUP_CONCAT(mission, '. \n') AS mission FROM mission_equipe GROUP BY id_equipe HAVING id_equipe = 1");
+        $res = ["nom" => "Equipe UI & UX", "missions" => $mission_UI_UX, "membres" => $membre_UI_UX];
         if ($final) 
             echo json_encode($res);
         else
             return $res;
-
     }
     
     public function membre_qualité_exploitation($final=true){
-        $membre_qualité_exploitation = DB::select('SELECT CONCAT(m.nom, " ", m.prenom) AS nom, user_github_pic, p.nom AS nom_poste FROM membre m JOIN fonction f ON m.id = f.id_membre JOIN poste p ON f.id_poste = p.id JOIN equipe e ON e.id = f.id_equipe WHERE e.id = 2');
-        $mission_qualité_exploitation = DB::select("SELECT mission FROM mission_equipe JOIN equipe ON equipe.id = mission_equipe.id_equipe WHERE equipe.id = 1");
-        $res = array("2" => ["nom" => "Equipe qualité & exploitation", "missions" => $mission_qualité_exploitation, "membres" => $membre_qualité_exploitation]);
+        $membre_qualité_exploitation = DB::select('SELECT prenom_usuel, CONCAT(m.nom, " ", m.prenom) AS nom_complet, user_github_pic, p.nom AS nom_poste FROM membre m JOIN fonction f ON m.id = f.id_membre JOIN poste p ON f.id_poste = p.id JOIN equipe e ON e.id = f.id_equipe WHERE e.id = 2');
+        $mission_qualité_exploitation = DB::select("SELECT GROUP_CONCAT(mission, '. \n') AS mission FROM mission_equipe GROUP BY id_equipe HAVING id_equipe = 2");
+        $res = ["nom" => "Equipe Qualité & Exploitation", "missions" => $mission_qualité_exploitation, "membres" => $membre_qualité_exploitation];
         if ($final) 
             echo json_encode($res);
         else
@@ -53,9 +53,9 @@ class Controller extends BaseController
     }
     
     public function membre_back($final=true){
-        $membre_back = DB::select('SELECT CONCAT(m.nom, " ", m.prenom) AS nom, user_github_pic, p.nom AS nom_poste FROM membre m JOIN fonction f ON m.id = f.id_membre JOIN poste p ON f.id_poste = p.id JOIN equipe e ON e.id = f.id_equipe WHERE e.id = 3');
-        $mission_back = DB::select("SELECT mission FROM mission_equipe JOIN equipe ON equipe.id = mission_equipe.id_equipe WHERE equipe.id = 1");
-        $res = array("3" => ["nom" => "Equipe Back", "missions" => $mission_back, "membres" => $membre_back]);
+        $membre_back = DB::select('SELECT prenom_usuel, CONCAT(m.nom, " ", m.prenom) AS nom_complet, user_github_pic, p.nom AS nom_poste FROM membre m JOIN fonction f ON m.id = f.id_membre JOIN poste p ON f.id_poste = p.id JOIN equipe e ON e.id = f.id_equipe WHERE e.id = 3 AND m.id <> 1');
+        $mission_back = DB::select("SELECT GROUP_CONCAT(mission, '. \n') AS mission FROM mission_equipe GROUP BY id_equipe HAVING id_equipe = 3");
+        $res = ["nom" => "Equipe Back", "missions" => $mission_back, "membres" => $membre_back];
         if ($final) 
             echo json_encode($res);
         else
@@ -64,14 +64,13 @@ class Controller extends BaseController
     }
     
     public function membre_admin($final=true){
-        $membre_admin = DB::select('SELECT CONCAT(m.nom, " ", m.prenom) AS nom, user_github_pic, p.nom AS nom_poste FROM membre m JOIN fonction f ON m.id = f.id_membre JOIN poste p ON f.id_poste = p.id JOIN equipe e ON e.id = f.id_equipe WHERE e.id = 4');
-        $mission_admin = DB::select("SELECT mission FROM mission_equipe JOIN equipe ON equipe.id = mission_equipe.id_equipe WHERE equipe.id = 1");
-        $res = array("4" => ["nom" => "Admin", "missions" => $mission_admin, "membres" => $membre_admin]);
+        $membre_admin = DB::select('SELECT prenom_usuel, CONCAT(m.nom, " ", m.prenom) AS nom_complet, user_github_pic, p.nom AS nom_poste FROM membre m JOIN fonction f ON m.id = f.id_membre JOIN poste p ON f.id_poste = p.id JOIN equipe e ON e.id = f.id_equipe WHERE e.id = 4 AND m.id <> 1');
+        $mission_admin = DB::select("SELECT GROUP_CONCAT(mission, '. \n') AS mission FROM mission_equipe GROUP BY id_equipe HAVING id_equipe = 4");
+        $res = ["nom" => "Equipe Admin", "missions" => $mission_admin, "membres" => $membre_admin];
         if ($final) 
             echo json_encode($res);
         else
             return $res;
-
     }
    
     public function membres(){
