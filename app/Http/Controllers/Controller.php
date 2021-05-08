@@ -72,6 +72,12 @@ class Controller extends BaseController
         else
             return $res;
     }
+
+//affichage du liste des membres actifs
+    public function membre_actifs(){
+        $actif = DB::select("SELECT nom, prenom, prenom_usuel, user_github, mail FROM membre where actif = 'TRUE'");
+        echo json_encode($actif);
+    }
    
     public function membres(){
         $ui_ux = $this->membre_UI_UX(false);
@@ -81,5 +87,7 @@ class Controller extends BaseController
         $res = [$ui_ux,$QE,$back,$admin];
         echo json_encode($res);
     }
+
+    
     
 }
