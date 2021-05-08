@@ -72,6 +72,12 @@ class Controller extends BaseController
         else
             return $res;
     }
+
+//affichage du liste des membres actifs
+    public function membre_actif(){
+        $actif = DB::select("SELECT CONCAT(m.nom, ' ', m.prenom) AS fullname, prenom_usuel, user_github, user_github_pic, facebook, linkedin, mail, p.nom AS nom_poste FROM membre m JOIN fonction f ON m.id = f.id_membre JOIN poste p ON f.id_poste = p.id where m.actif = True");
+        echo json_encode($actif);
+    }
    
     public function membres(){
         $ui_ux = $this->membre_UI_UX(false);
@@ -81,5 +87,7 @@ class Controller extends BaseController
         $res = [$ui_ux,$QE,$back,$admin];
         echo json_encode($res);
     }
+
+    
     
 }

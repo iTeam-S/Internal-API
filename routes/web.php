@@ -30,3 +30,5 @@ Route::get('/back', 'Controller@membre_back');
 Route::get('/admin', 'Controller@membre_admin');
 
 Route::get('/membres', 'Controller@membres');
+
+Route::get('/actif', 'Controller@membre_actif');
