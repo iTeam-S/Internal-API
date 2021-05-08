@@ -75,7 +75,7 @@ class Controller extends BaseController
 
 //affichage du liste des membres actifs
     public function membre_actif(){
-        $actif = DB::select("SELECT nom, prenom, prenom_usuel, user_github, mail FROM membre where actif = 'TRUE'");
+        $actif = DB::select("SELECT CONCAT(m.nom, ' ', m.prenom) AS fullname, prenom_usuel, user_github, user_github_pic, facebook, linkedin, mail, p.nom AS nom_poste FROM membre m JOIN fonction f ON m.id = f.id_membre JOIN poste p ON f.id_poste = p.id where m.actif = True");
         echo json_encode($actif);
     }
    
