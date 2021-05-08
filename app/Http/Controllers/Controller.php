@@ -74,7 +74,7 @@ class Controller extends BaseController
     }
 
 //affichage du liste des membres actifs
-    public function membre_actifs(){
+    public function membre_actif(){
         $actif = DB::select("SELECT nom, prenom, prenom_usuel, user_github, mail FROM membre where actif = 'TRUE'");
         echo json_encode($actif);
     }
